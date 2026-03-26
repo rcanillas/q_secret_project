@@ -1,0 +1,24 @@
+{
+  "user_context": {
+    "company_name": "Agile Spark EURL",
+    "business_sector": "Conseil en organisation et management agile — Création de contenu numérique",
+    "naf_code": "7022Z",
+    "legal_form": "EURL",
+    "tax_regime": {
+      "corporate_tax": "IS — Impôt sur les Sociétés (régime réel simplifié)",
+      "vat_regime": "Régime réel normal — déclaration trimestrielle CA3",
+      "vat_number": "FR55987654321",
+      "fiscal_year": "01/01/2025 — 31/12/2025",
+      "note": "Revenus AdSense hors champ TVA française (B2C international). Revenus Gumroad soumis TVA selon règles OSS."
+    },
+    "bank_account": {
+      "owner": "Agile Spark EURL",
+      "iban": "FR76 1027 8060 3100 0654 3210 987",
+      "bic": "CMCIFR2AXXX",
+      "bank": "Crédit Mutuel",
+      "account_type": "Compte professionnel"
+    },
+    "address": "47 rue Garibaldi, 69006 Lyon",
+    "siret": "987 654 321 00023"
+  }
+}

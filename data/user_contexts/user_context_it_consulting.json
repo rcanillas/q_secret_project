@@ -1,0 +1,23 @@
+{
+  "user_context": {
+    "company_name": "Nextech Conseil SASU",
+    "business_sector": "Conseil et développement informatique",
+    "naf_code": "6202A",
+    "legal_form": "SASU",
+    "tax_regime": {
+      "corporate_tax": "IS — Impôt sur les Sociétés (régime réel normal)",
+      "vat_regime": "Régime réel normal — déclaration trimestrielle CA3",
+      "vat_number": "FR82123456789",
+      "fiscal_year": "01/01/2025 — 31/12/2025"
+    },
+    "bank_account": {
+      "owner": "Nextech Conseil SASU",
+      "iban": "FR76 3000 4028 3700 0123 4567 890",
+      "bic": "BNPAFRPPXXX",
+      "bank": "BNP Paribas",
+      "account_type": "Compte professionnel"
+    },
+    "address": "12 rue de la République, 69001 Lyon",
+    "siret": "123 456 789 00012"
+  }
+}
