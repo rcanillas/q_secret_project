@@ -5,8 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "icecream>=2.1.10",
-    "scikit-learn>=1.8.0",
-    "shap>=0.51.0",
-    "streamlit>=1.55.0",
+    "icecream==2.1.10",
+    "mlflow==3.10.1",
+    "scikit-learn==1.8.0",
+    "shap==0.51.0",
+    "streamlit==1.55.0",
 ]
