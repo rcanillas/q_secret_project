@@ -11,7 +11,10 @@ def aggregate_data(bank_transactions, invoice_lines, user_context):
     aggregated_df["tax_regime"] = user_context["user_context"]["tax_regime"][
         "vat_regime"
     ]
-    # TODO: special case when transaction is composed of several different lines
+    # TODO: special case when transaction is composed of several invoice lines -
+    # ! an invoice can be paid in several installments, so we have 1-1, 1-N, N-1, N-N...
+    # Probably easiest is to create a "order" to create link between transactions and invoices
+    # for now we postulate 1-1
     return aggregated_df
 
 
