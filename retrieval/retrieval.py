@@ -3,7 +3,9 @@ from icecream import ic
 import json
 
 
-def aggregate_data(bank_transactions, invoice_lines, user_context):
+def aggregate_data(
+    bank_transactions, invoice_lines, user_context, accounting_codes, input=True
+):
     # Minimal working example
     aggregated_df = invoice_lines.copy()
     aggregated_df["client"] = user_context["user_context"]["company_name"]
@@ -11,10 +13,18 @@ def aggregate_data(bank_transactions, invoice_lines, user_context):
     aggregated_df["tax_regime"] = user_context["user_context"]["tax_regime"][
         "vat_regime"
     ]
+    aggregated_df["merchant"] = bank_transactions[
+        "merchant"
+    ]  # string as json here, let's hope it matches
     # TODO: special case when transaction is composed of several invoice lines -
     # ! an invoice can be paid in several installments, so we have 1-1, 1-N, N-1, N-N...
     # Probably easiest is to create a "order" to create link between transactions and invoices
     # for now we postulate 1-1
+    if input:
+        aggregated_df["codes"] = accounting_codes["codes"]
+        aggregated_df["accounts"] = accounting_codes["accounts"]
+        aggregated_df["sub_accounts"] = accounting_codes["sub_accounts"]
+        aggregated_df["sub_details"] = accounting_codes["sub_details"]
     return aggregated_df
 
 
@@ -26,5 +36,9 @@ if __name__ == "__main__":
     invoice_lines = pd.read_json(il_path, lines=True)
     with open(f"{folder}/user_context.json") as uc_file:
         user_context = json.load(uc_file)
-    aggregated_df = aggregate_data(bank_transactions, invoice_lines, user_context)
-    aggregated_df.to_csv("outputs/aggregated_data.csv")
+    ac_path = f"{folder}/accounting_codes.jsonl"
+    accounting_codes = pd.read_json(ac_path, lines=True)
+    aggregated_df = aggregate_data(
+        bank_transactions, invoice_lines, user_context, accounting_codes
+    )
+    aggregated_df.to_json("outputs/aggregated_data.jsonl", orient="records", lines=True)
