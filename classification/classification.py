@@ -89,3 +89,5 @@ if __name__ == "__main__":
     labels = mlb_dict[level].inverse_transform(y_pred)
     joblib.dump(trained_pipeline, "outputs/pipeline.pkl")
     joblib.dump(mlb_dict, "outputs/mlb_dict.pkl")
+    y_probas = trained_pipeline.predict_proba(X_train)
+    ic(y_probas)
