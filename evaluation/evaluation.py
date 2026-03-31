@@ -2,7 +2,6 @@ import pandas as pd
 import joblib
 from icecream import ic
 from sklearn.metrics import accuracy_score, hamming_loss, f1_score, jaccard_score
-from sklearn.utils.multiclass import type_of_target
 
 
 def evaluate_results(y_true, y_pred):
@@ -20,8 +19,8 @@ def evaluate_results(y_true, y_pred):
 if __name__ == "__main__":
     import joblib
 
-    mlb_dict = joblib.load("outputs/mlb_dict.pkl")
-    pipeline = joblib.load("outputs/pipeline.pkl")
+    mlb_dict = joblib.load("outputs/mlb_dict_test.pkl")
+    pipeline = joblib.load("outputs/pipeline_test.pkl")
 
     eval_data_path = "data/eval_data/eval_data_mini.jsonl"
     eval_data_df = pd.read_json(eval_data_path, lines=True)

@@ -3,26 +3,23 @@ from icecream import ic
 
 
 def get_matching_lines(historical_data, new_data):
-    matching_lines_df = pd.DataFrame()
-    for hl_idx, historical_line in historical_data.iterrows():
+    matched_list = []
+    for hl_idx, new_data_line in new_data.iterrows():
         # potential bottleneck here
-        ic(historical_line)
-        matched_data = new_data.loc[
-            (new_data["supplier"].str.lower() == historical_line["supplier"].lower())
-            & (new_data["amount_ht"] == historical_line["amount_ht"])
-            & (new_data["item"].str.lower() == historical_line["item"].lower())
+        # ic(historical_line)
+        matched_data = historical_data.loc[
+            (
+                historical_data["supplier"].str.lower()
+                == new_data_line["supplier"].lower()
+            )
+            & (historical_data["amount_ht"] == new_data_line["amount_ht"])
+            & (historical_data["item"].str.lower() == new_data_line["item"].lower())
         ]
         if not matched_data.empty:
-            matched_data["codes"] = [historical_line["codes"]] * len(matched_data)
-            matched_data["accounts"] = [historical_line["accounts"]] * len(matched_data)
-            matched_data["sub_accounts"] = [historical_line["sub_accounts"]] * len(
-                matched_data
-            )
-            matched_data["sub_details"] = [historical_line["sub_details"]] * len(
-                matched_data
-            )
+            matched_data = matched_data.iloc[0]
             # ic(matched_data)
-            matching_lines_df = pd.concat([matching_lines_df, matched_data])
+            matched_list.append(matched_data)
+    matching_lines_df = pd.DataFrame(matched_list)
     return matching_lines_df
 
 
@@ -35,5 +32,5 @@ if __name__ == "__main__":
     # ic(new_data)
     ic(matching_lines_df)
     matching_lines_df.to_json(
-        "outputs/matching_lines_df.jsonl", orient="records", lines=True
+        "outputs/matching_lines_df_test.jsonl", orient="records", lines=True
     )

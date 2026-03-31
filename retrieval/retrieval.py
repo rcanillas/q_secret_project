@@ -24,7 +24,10 @@ def aggregate_data(
         aggregated_df["codes"] = accounting_codes["codes"]
         aggregated_df["accounts"] = accounting_codes["accounts"]
         aggregated_df["sub_accounts"] = accounting_codes["sub_accounts"]
-        aggregated_df["sub_details"] = accounting_codes["sub_details"]
+        if "sub_details" in accounting_codes:
+            aggregated_df["sub_details"] = accounting_codes["sub_details"]
+        else:
+            aggregated_df["sub_details"] = f"{accounting_codes['sub_accounts']}00"
     return aggregated_df
 
 
@@ -41,4 +44,6 @@ if __name__ == "__main__":
     aggregated_df = aggregate_data(
         bank_transactions, invoice_lines, user_context, accounting_codes
     )
-    aggregated_df.to_json("outputs/aggregated_data.jsonl", orient="records", lines=True)
+    aggregated_df.to_json(
+        "outputs/aggregated_data_test.jsonl", orient="records", lines=True
+    )
