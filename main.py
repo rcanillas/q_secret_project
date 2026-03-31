@@ -1,7 +1,8 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from retrieval import aggregate_data
 from matching import get_matching_lines
+from classification import prepare_data, get_pipeline, train_pipeline
+from evaluation import evaluate_results
 from icecream import ic
 import json
 
@@ -39,6 +40,32 @@ def main():
     matching_lines_df.to_json(
         "outputs/matching_lines_df.jsonl", orient="records", lines=True
     )
+    numeric_features = ["amount_ht", "vat_rate", "vat", "amount_ttc", "quantity"]
+    categorical_features = [
+        "supplier",
+        "item",
+        "category",
+        "label",
+        "client",
+        "legal_form",
+        "tax_regime",
+        # "merchant", dict is messing with pipeline
+    ]
+    targets = ["codes", "accounts", "sub_accounts", "sub_details"]
+    X_train, y_train_dict, mlb_dict = prepare_data(
+        histo_dataset_df, numeric_features, categorical_features, targets
+    )
+    pipeline = get_pipeline(numeric_features, categorical_features)
+    level = "codes"
+    trained_pipeline = train_pipeline(pipeline, X_train, y_train_dict[level])
+    predictions = trained_pipeline.predict(
+        test_dataset_df[[c for c in numeric_features + categorical_features]]
+    )
+    # ic(predictions)
+    y_eval = test_dataset_df[level]
+    y_eval_transformed = mlb_dict[level].transform(y_eval.apply(set))
+    results_dict = evaluate_results(y_eval_transformed, predictions)
+    ic(results_dict)
 
 
 if __name__ == "__main__":

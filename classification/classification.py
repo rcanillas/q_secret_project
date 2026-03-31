@@ -25,13 +25,13 @@ targets = ["codes", "accounts", "sub_accounts", "sub_details"]
 
 def prepare_data(data_df, numeric_features, categorical_features, targets):
     X_train = data_df[numeric_features + categorical_features]
-    ic(X_train)
+    # ic(X_train)
     y_train_dict = {}
     mlb_dict = {}
     for target in targets:
         # TODO: better preparation for lower hierachy (separate by code, etc)
         mlb_target = MultiLabelBinarizer()
-        ic(data_df[target])
+        # ic(data_df[target])
         y_train_dict[target] = mlb_target.fit_transform(data_df[target])
         mlb_dict[target] = mlb_target
     return X_train, y_train_dict, mlb_dict
